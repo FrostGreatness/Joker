@@ -109,16 +109,4 @@ async def embed(ctx, link):
 async def say(ctx, *, x: str):
     await ctx.send(x)
 
-days1 = bot.create_group("monday", "tuesday", "wednesday")
-
-days2 = bot.create_group("friday", "saturday", "sunday" )
-
-@days1.command()
-async def monday(ctx):
-  await ctx.respond(f"Hello, {ctx.author}!")
-
-
-
-
-
 bot.run(TOKEN)
