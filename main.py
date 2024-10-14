@@ -2,21 +2,20 @@ import discord
 import requests
 import json
 import os
-from dotenv import load_dotenv
 from discord.ext import commands
 import asyncio
 import time
 import random
 import sys
+import re
+from urllib.request import urlretrieve
 from random import random 
-load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 bot = commands.Bot(command_prefix='?', intents=intents)
 guild = "1126640367186493491"
-
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user}')
@@ -81,6 +80,36 @@ async def steal(ctx, emoji: discord.PartialEmoji):
 
     embed.set_image(url=(emoji.url))
     await ctx.send(embed=embed)
+
+#@bot.event
+#async def on_message(message):
+#    channel = bot.get_channel(1282479461039603732)
+ #       #await channel.send(message.stickers)
+#    if message.author == bot.user:
+#       return
+#   await channel.send(message.stickers)
+    
+@bot.command()
+async def id(ctx):
+    #await ctx.send(ctx.message.stickers)
+    # [<StickerItem id=1270153970354225152 name
+    await ctx.send(ctx.message.stickers)
+    
+
+@bot.slash_command(name="yoinkgif")
+async def yoinkgif(ctx, id):
+    sticker = "https://media.discordapp.net/stickers/" + (id) + ".gif?size=320&quality=lossless"
+    title = "Animated Sticker: " + (id) + (" ") + (sticker)
+    embed = discord.Embed(title=(title))
+    embed.set_image(url=(sticker))
+    await ctx.respond(embed=embed)
+@bot.slash_command(name="yoink")
+async def yoink(ctx, id):
+    sticker = "https://media.discordapp.net/stickers/" + (id) + ".png?size=320&quality=lossless"
+    title = "Sticker: " + (id) + (" ") + (sticker)
+    embed = discord.Embed(title=(title))
+    embed.set_image(url=(sticker))
+    await ctx.respond(embed=embed)
 
 @bot.command()
 async def pfp(ctx,id):
