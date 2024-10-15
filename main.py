@@ -9,7 +9,10 @@ import random
 import sys
 import re
 from urllib.request import urlretrieve
-from random import random 
+from random import random
+from dotenv import load_dotenv
+
+load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
