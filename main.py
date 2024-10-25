@@ -2,6 +2,7 @@ import discord
 import requests
 import json
 import os
+from dotenv import load_dotenv
 from discord.ext import commands
 import asyncio
 import time
@@ -10,6 +11,8 @@ import sys
 import re
 from urllib.request import urlretrieve
 from random import random 
+import pyktok as pyk
+load_dotenv() 
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
@@ -137,5 +140,33 @@ async def embed(ctx, link):
 @bot.command()
 async def say(ctx, *, x: str):
     await ctx.send(x)
+
+@bot.slash_command(name="tiktok")
+async def tiktok(ctx, link):
+    txt = (link)
+
+    x = (txt[23:100])
+    filetxt = x.replace("/", "_" )
+    path = ("D:/joker updat e/Joker/")
+    
+    s = (path) + (filetxt) + ('.mp4')
+    if os.path.exists(s):
+        os.remove(s)
+    else:
+        print("The file does not exist") 
+    pyk.specify_browser('firefox') #browser specification may or may not be necessary depending on your local settings
+    pyk.save_tiktok((link),
+	        True,
+                'tiktok_data.csv',
+		'firefox')
+    
+    with open((s), 'rb') as f:
+        video_file = discord.File(f)
+        await ctx.respond("Here's your video:" , file=video_file)
+
+
+
+
+
 
 bot.run(TOKEN)
